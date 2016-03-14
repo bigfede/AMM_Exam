@@ -6,11 +6,31 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Federico Porrà">
+        <meta name="keywords" content="e-commerce, elettronica, comprare">
+        <meta name="description" content="Login sito eCommerce">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h2>Login</h2>
+        <p>Inserire nome utente e password per accedere all'area personale</p>
+        <form action='login.php' method='get'>
+            <label for='usr'>Nome Utente:</label>
+            <input type='text' name='user' id='usr' value='Username'><br>
+            <label for='pss'>Password:</label>
+            <input type='password' name='pswrd' id='pss' value='Password'><br>
+            <button type="submit">login</button>
+            
+        </form>
+        
+        <div>
+            <ul>
+                <li><a href='descrizione.html'>Descrizione</a></li>
+                <li><a href='cliente.html'>Cliente</a></li>
+                <li><a href='venditore.html'>Venditore</a></li>
+            </ul>
+        </div>
     </body>
 </html>
