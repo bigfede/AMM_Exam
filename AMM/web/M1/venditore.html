@@ -6,11 +6,42 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Venditore</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <meta name="author" content="Federico Porrà">
+         <meta name="keywords" content="e-commerce, elettronica, comprare">
+         <meta name="description" content="Pagina Venditore">
+         </head>
     <body>
-        <div>TODO write content</div>
+    <header>
+        <h1>
+            P. Store
+        </h1>
+        <p>
+            P. Store è un sito di eCommerce di prodotti elettronici: computers, smartphone e dispositivi ad essi collegati.
+            Sono ammessi alla vendita anche componenti elettronici, quali resistori, condensatori
+            e integrati.
+        </p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href='descrizione.html'>Descrizione</a></li>
+            <li><a href='login.html'>Login</a></li>
+        </ul>
+    </nav>
+    <form action="venditore.html" method="post">
+        <input type="text" id="nome" name="nome_prodotto" value="Inserisci il nome del prodotto">
+        <input type="url" id="url" name="url_immagine">
+        <textarea rows="4" cols="20" name="descrizione" id="desc">Inserisci una descrizione del prodotto</textarea>
+        <input type="text" id="qunty" name="quantity" value="Inserisci il numero di prodotti">
+        <input type="text" id="prezzo" name="price" value="Inserisci il prezzo del prodotto">
+        <label for="desc">Descrizione</label>
+        <label for="nome">Nome prodotto</label>
+        <label for="prezzo">Prezzo unitario</label>
+        <label for="qunty">Quantit&agrave;</label>
+        <label for="url">Url immagine</label>
+        <button type="submit">Aggiungi Prodotto</button>
+    </form>
     </body>
 </html>
