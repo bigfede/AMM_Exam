@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <title>Venditore</title>
+        <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <meta name="author" content="Federico Porrà">
+         <meta name="keywords" content="e-commerce, elettronica, comprare">
+         <meta name="description" content="Pagina Venditore">
+         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
+         </head>
+    <body>
+        <div class="pagina">
+    <header>
+            <h1>
+                P.Store
+            </h1>
+            <p class="testo_header">
+                P. Store è un sito di eCommerce di prodotti elettronici: computers, smartphone e dispositivi ad essi collegati. 
+                Sono ammessi alla vendita anche componenti elettronici, quali resistori, condensatori
+                e integrati.
+            </p> 
+        </header>
+    <nav id="navigazione">
+        <h3 class="titolo_navigazione">Menù di navigazione</h3>
+        <ul>
+            <li><a href='descrizione.html'>Descrizione</a></li>
+            <li><a href='login.html'>Login</a></li>
+        </ul>
+    </nav>
+        <div class="contenuto">
+    <form action="venditore.html" method="post">
+        <label for="nome">Nome prodotto</label>
+        <input type="text" id="nome" name="nome_prodotto" value="Inserisci il nome del prodotto">
+        <label for="url">Url immagine</label>
+        <input type="url" id="url" name="url_immagine">
+        <label for="desc">Descrizione</label>
+        <textarea rows="4" cols="20" name="descrizione" id="desc">Inserisci una descrizione del prodotto</textarea>
+        <label for="qunty">Quantit&agrave;</label>
+        <input type="text" id="qunty" name="quantity" value="Inserisci il numero di prodotti">
+        <label for="prezzo">Prezzo unitario</label>
+        <input type="text" id="prezzo" name="price" value="Inserisci il prezzo del prodotto">
+        
+    </form>
+        </div>
+        <div class="pulsanti">
+            <button type="submit">Aggiungi Prodotto</button>
+        </div>
+    </body>
+    </div>
+</html>

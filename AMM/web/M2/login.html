@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Federico Porrà">
+        <meta name="keywords" content="e-commerce, elettronica, comprare">
+        <meta name="description" content="Login sito eCommerce">
+        <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
+    </head>
+    <body>
+        <div class="pagina">
+        <header>
+            <h1>
+                P.Store
+            </h1>
+            <p class="testo_header">
+                P. Store è un sito di eCommerce di prodotti elettronici: computers, smartphone e dispositivi ad essi collegati. 
+                Sono ammessi alla vendita anche componenti elettronici, quali resistori, condensatori
+                e integrati.
+            </p> 
+        </header>
+        <nav id="navigazione">
+            <h3 class="titolo_navigazione">Menù di navigazione</h3>
+            <ul>
+                <li><a href='descrizione.html'>Descrizione</a></li>
+                <li><a href='cliente.html'>Cliente</a></li>
+                <li><a href='venditore.html'>Venditore</a></li>
+            </ul>
+        </nav>
+        <div class="contenuto">
+        <h2>Login</h2>
+        <p>Inserire nome utente e password per accedere all'area personale</p>
+        <form action='login.html' method='post'> <!-- metodo post usato per le password -->
+            <label for='usr'>Nome Utente:</label>
+            <!--<input type="text" onfocus="if(this.value == 'Username') { this.value = ''; }" value="Username" id="usr" />-->
+            <input type='text' name='user' id='usr' value='Username'> <!-- "id" usato per  "label for", "name" ciò da mandare al server -->
+            <label for='pss'>Password:</label>
+            <input type='password' name='pswrd' id='pss' value='Password'>
+        </form>
+        </div>
+        <div class="pulsanti">
+            <button id="login" type="submit">Login</button>
+        </div>   
+        </div>
+        
+        
+    </body>
+    
+</html>
