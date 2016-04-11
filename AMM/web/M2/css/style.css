@@ -1,6 +1,4 @@
 /*Stile body, h1,h2,h3, link, header, ul, li e table*/
-
-
 body{
     font-size: 13px;
     font-family: "Open Sans", Arial, sans-serif;
@@ -201,6 +199,7 @@ input#nome, input#url, input#qunty, input#prezzo {
     border-left: 1px solid #46A3AF
    /* border: 2px solid yellow;*/
 }
+
 
 /*Layout fluido*/
 @media only screen and (max-width: 1024px) and (min-width: 480px)
