@@ -74,6 +74,7 @@ public class VenditoreServlet extends HttpServlet {
         {
         
             request.setAttribute("Appoggio", "Negato");
+            request.setAttribute("Tipo", "venditore");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         
         }

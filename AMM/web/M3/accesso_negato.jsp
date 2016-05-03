@@ -9,7 +9,11 @@
 <div class="contenuto">
             
         <h2 class="rosso">Accesso Negato</h2>
-        <h3>Area risevata</h3>
+        <c:choose>
+            <c:when test="${Tipo == 'cliente'}" ><h3>Area risevata ai Clienti</h3></c:when>
+            <c:when test="${Tipo == 'venditore'}" ><h3>Area risevata ai Venditori</h3></c:when>
+        </c:choose>
+        
         
         
 </div>

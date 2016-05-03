@@ -84,6 +84,7 @@ public class ServletCliente extends HttpServlet {
         {
         
             request.setAttribute("Appoggio", "Negato");
+            request.setAttribute("Tipo", "cliente");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         
         }

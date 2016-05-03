@@ -80,7 +80,7 @@ public class UtentiFactory {
         client_1.setNome("Federico");
         client_1.setCognome("Porrà");
         client_1.setId(0);
-        client_1.setSaldo(1000);
+        client_1.setSaldo(1);
         
         arrayOggettiComprati_cliente.add(oggetto_3);
         arrayOggettiComprati_cliente.add(oggetto_1);
