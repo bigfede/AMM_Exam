@@ -9,52 +9,51 @@
 
            <div class="contenuto">
                
-       <h2>Bentornato ${cliente.nome} ${cliente.cognome}, ecco i prodotti disponibili</h2>
+       <h2>Ciao ${cliente.nome} ${cliente.cognome}</h2>
        
-       
-        <table>
-            <!-- valutare se fare una riga con intestazione tabella -->
-            <tr>
+       <c:choose>
+            <c:when test="${Pagina == 'Riepilogo'}" >
+            <h3 class="rosso">Hai aggiunto un oggetto al carrello</h3>
+            <p><img src="${oggetto_comprato.immagine}"  width="128" height="128"></p>
+            <p>Nome prodotto: ${oggetto_comprato.nome}</p>
+            <p>Descrizione prodotto: ${oggetto_comprato.descrizione}</p>
+            <p>Prezzo unitario: ${oggetto_comprato.prezzo}</p>
+            <form action="cliente.html" method="post"><button id="login" type="submit" name="Compra">Acquista</button>
+            <input type="hidden" name="prezzo" value="${oggetto_comprato.prezzo}"></form>
+            </c:when>
+            
+            <c:when test="${Pagina== 'Tabella'}">
+                <table>
+           
+                <tr>
                 <th></th>
                 <th>Nome Prodotto</th>
                 <th>Quantit&agrave; disponibile</th>
                 <th>Costo unitario</th>
                 <th></th>
-            </tr>
-            <tr> <!-- tr usato per le righe -->
-                <td><img src="imgs/Resistenza.jpg" alt="Resistenza" width="128" height="128"></td> <!-- td usato per le celle-->
-                <td>Resistenza 100&Omega;, 1W</td>
-                <td>1000</td>
-                <td>0,4&euro;</td>
-                <td><a href="cliente.html">Aggiungi al Carrello</a></td>
-            </tr>
-            <tr> <!-- tr usato per le righe -->
-                <td><img src="imgs/Processore.jpg" alt="Resistenza" width="128" height="128"></td> <!-- td usato per le celle-->
-                <td>Processore QXZ700</td>
-                <td>40</td>
-                <td>459,99&euro;</td>
-                <td><a href="cliente.html">Aggiungi al Carrello</a></td>
-            </tr>
-            <tr> <!-- tr usato per le righe -->
-            <td><img src="imgs/Ventola.jpg" alt="Resistenza" width="128" height="128"></td> <!-- td usato per le celle-->
-            <td>Ventola 10X10mm</td>
-            <td>1000</td>
-            <td>12,99&euro;</td>
-            <td><a href="cliente.html">Aggiungi al Carrello</a></td>
-        </tr>
-            <tr> <!-- tr usato per le righe -->
-                <td><img src="imgs/Mouse.jpg" alt="Resistenza" width="128" height="128"></td> <!-- td usato per le celle-->
-                <td>Microsoft Designer Mouse</td>
-                <td>10</td>
-                <td>39,99&euro;</td>
-                <td><a href="cliente.html">Aggiungi al Carrello</a></td>
-            </tr>
-            <tr> <!-- tr usato per le righe -->
-                <td><img src="imgs/Condensatore.jpg" alt="Resistenza" width="128" height="128"></td> <!-- td usato per le celle-->
-                <td>Condensatore 18&mu;F 10V</td>
-                <td>1099</td>
-                <td>1,8&euro;</td>
-                <td><a href="cliente.html">Aggiungi al Carrello</a></td>
-            </tr>
+                </tr>
+             
+                <c:forEach items="${oggetti}" var="oggetto">
+                <tr>
+                <td><img src="${oggetto.immagine}"  width="128" height="128"></td>
+                <td> ${oggetto.nome} </td>
+                <td> ${oggetto.quantita}</td>
+                <td> ${oggetto.prezzo}</td>
+                    
+                <td><form action="cliente.html" method="post"><button id="login" type="submit" name="Submit">Compra</button>
+                <input type="hidden" name="id" value="${oggetto.id}"></form></td>
+                </tr>
+                </c:forEach> 
+            </c:when>            
+                
+            <c:when test="${Pagina == 'Errore'}">
+                <h3 class="rosso">Credito Insufficiente per terminare la transazione</h3>
+            </c:when>
+                
+            <c:when test="${Pagina == 'Acquisto'}">
+                <h3 class="rosso">Complimenti, hai appena terminato l'acquisto</h3>
+            </c:when>
+        </c:choose>    
+
         </table>
            </div>

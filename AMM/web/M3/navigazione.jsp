@@ -13,10 +13,9 @@
                 <li><a href='cliente.html'>Cliente</a></li>
                 <li><a href='venditore.html'>Venditore</a></li>
                 <li><a href='login.html'>Login</a></li>
-                <li><form action="login.html" method="post">
+                <form action="login.html" method="post">
                     <label></label>
                     <button id="login" type="submit" name="Invalidate">Logout</button>
-                    </form>
-                </li>
+                </form>
             </ul>
 </nav>

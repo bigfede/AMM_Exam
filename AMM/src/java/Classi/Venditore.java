@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Venditore extends Utente{
     /* Attributi */
-    private ArrayList<Integer> oggettiVenduti = new ArrayList<>();
+    private ArrayList<Oggetti> oggettiVenduti = new ArrayList<>();
     private int saldo_venditore;
     /* Costruttore */
     public Venditore()
@@ -17,12 +17,12 @@ public class Venditore extends Utente{
             
     /* Metodi */
    
-    public ArrayList<Integer> getOggettiVenduti() {
+    public ArrayList<Oggetti> getOggettiVenduti() {
         return oggettiVenduti;
     }
 
    
-    public void setOggettiVenduti(ArrayList<Integer> oggettiVenduti) {
+    public void setOggettiVenduti(ArrayList<Oggetti> oggettiVenduti) {
         this.oggettiVenduti = oggettiVenduti;
     }
     public int getSaldo(){

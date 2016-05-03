@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Cliente extends Utente {
     /* Attributi */
-    private ArrayList<Integer> oggettiComprati = new ArrayList<>(); 
+    private ArrayList<Oggetti> oggettiComprati = new ArrayList<>(); 
     private int saldo_cliente;
     private boolean stato;
     /* Costruttore */
@@ -21,12 +21,12 @@ public class Cliente extends Utente {
     /* Metodi */
 
     
-    public ArrayList<Integer> getOggettiComprati() {
+    public ArrayList<Oggetti> getOggettiComprati() {
         return oggettiComprati;
     }
 
     
-    public void setOggettiComprati(ArrayList<Integer> oggettiComprati) {
+    public void setOggettiComprati(ArrayList<Oggetti> oggettiComprati) {
         this.oggettiComprati = oggettiComprati;
     }
     public int getSaldo(){

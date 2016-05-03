@@ -14,6 +14,7 @@
             <c:when test="${Appoggio == 'Cliente'}" ><title>Cliente</title></c:when>
             <c:when test="${Appoggio == 'Venditore'}" ><title>Venditore</title></c:when>
             <c:when test="${Appoggio == 'Login'}" ><title>Login</title></c:when>
+            <c:when test="${Appoggio == 'Negato'}" ><title>Accesso Negato</title></c:when>
         </c:choose>
         
         <meta charset="UTF-8">
