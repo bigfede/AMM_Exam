@@ -6,6 +6,8 @@
 package Classi;
 
 
+
+
 public class Oggetti {
     /* Attributi */
     private int id;
@@ -14,6 +16,7 @@ public class Oggetti {
     private String descrizione;
     private String immagine;
     private int quantity;
+    
 
     
     
@@ -92,5 +95,6 @@ public class Oggetti {
         return quantity;
     
     }
+    
     
 }

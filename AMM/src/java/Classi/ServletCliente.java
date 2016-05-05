@@ -60,7 +60,7 @@ public class ServletCliente extends HttpServlet {
         
         String codice = request.getParameter("id");
         int code = Integer.parseInt(codice);
-        ArrayList<Oggetti> listaOggetti = UtentiFactory.getInstance().getObjectList();
+        ArrayList<Oggetti> listaOggetti = OggettiFactory.getInstance().getObjectList();
             for(Oggetti o : listaOggetti){
                 if (code == o.getId()){
                 request.setAttribute("oggetto_comprato", o);

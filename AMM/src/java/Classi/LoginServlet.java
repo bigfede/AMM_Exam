@@ -51,8 +51,10 @@ public class LoginServlet extends HttpServlet {
                         request.setAttribute("Appoggio", "Cliente");
                         request.setAttribute("Pagina", "Tabella");
                         session.setAttribute("cliente",u);
-                        
+                        session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectList());
                         request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
+                        
+                        
                     }
                     else
                     {
@@ -72,14 +74,14 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("Appoggio", "Login");
                 request.getRequestDispatcher("/M3/home.jsp").forward(request, response);     
             }
-        if(session.getAttribute("sessione").equals("venditore")){
+        if(session.getAttribute("sessione") == "venditore"){
         
             request.setAttribute("Appoggio", "Venditore");
             request.setAttribute("Pagina", "Form");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
         
-        if(session.getAttribute("sessione").equals("cliente"))
+        if(session.getAttribute("sessione") == "cliente")
         {
         
             request.setAttribute("Pagina", "Tabella");
