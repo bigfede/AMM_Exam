@@ -47,63 +47,50 @@ public class LoginServlet extends HttpServlet {
                     
                     if (u instanceof Cliente) 
                     {
-                        
-                        
-                        
-                        
-                        
                         session.setAttribute("sessione", "cliente");
                         request.setAttribute("Appoggio", "Cliente");
                         request.setAttribute("Pagina", "Tabella");
                         session.setAttribute("cliente",u);
-                        session.setAttribute("oggetti", UtentiFactory.getInstance().getObjectList());
+                        
                         request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
-                   
-                        
-                        
                     }
                     else
                     {
-                        
                         session.setAttribute("sessione", "venditore");
                         request.setAttribute("Appoggio", "Venditore");
                         request.setAttribute("Pagina", "Form");
                         session.setAttribute("venditore", u);
-
                         request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
-                         
-                        
                     }                    
                 }
                 else {request.setAttribute("errore", "Username o Password errati");}
             }
         }
-        if(session.getAttribute("sessione") == "venditore"){
+        if(request.getParameter("Invalidate") != null)
+            {
+                session.invalidate();
+                request.setAttribute("Appoggio", "Login");
+                request.getRequestDispatcher("/M3/home.jsp").forward(request, response);     
+            }
+        if(session.getAttribute("sessione").equals("venditore")){
         
             request.setAttribute("Appoggio", "Venditore");
             request.setAttribute("Pagina", "Form");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
-            
-        
         }
         
-        if(session.getAttribute("sessione") == "cliente"){
+        if(session.getAttribute("sessione").equals("cliente"))
+        {
         
-            
             request.setAttribute("Pagina", "Tabella");
             request.setAttribute("Appoggio", "Cliente");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
-            
         }
-       if(request.getParameter("Invalidate") != null)
-            {
-                session.invalidate();
-                request.setAttribute("Appoggio", "Login");
-                request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
-            }
-       else {
-       request.setAttribute("Appoggio", "Login");
-       request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
+       
+       else 
+       {
+            request.setAttribute("Appoggio", "Login");
+            request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
        }                      
         
     }
