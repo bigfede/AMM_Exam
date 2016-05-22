@@ -85,7 +85,7 @@ public class LoginServlet extends HttpServlet {
        {
             request.setAttribute("Appoggio", "Login");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
-       }                      
+       }                        
         
     }
            
