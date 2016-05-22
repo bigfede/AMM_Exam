@@ -4,15 +4,15 @@ package Classi;
 
 public class Cassa {
 
-    private int saldo;
-    private int prezzo;
+    private float saldo;
+    private float prezzo;
 
     
     
 
 
 
-public void Acquisto(Oggetti oggetto_acquistato, Cliente cliente){
+public String Acquisto(Oggetti oggetto_acquistato, Cliente cliente){
     
         prezzo = oggetto_acquistato.getPrezzo();
         saldo = cliente.getSaldo();
@@ -22,7 +22,9 @@ public void Acquisto(Oggetti oggetto_acquistato, Cliente cliente){
             {saldo = saldo - prezzo;
             cliente.setSaldo(saldo);}
             
-        }
+    return null;    
+    }
 }
+
     
 

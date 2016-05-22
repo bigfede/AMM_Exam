@@ -10,32 +10,26 @@ import java.util.ArrayList;
 
 public class Cliente extends Utente {
     /* Attributi */
-    private ArrayList<Oggetti> oggettiComprati = new ArrayList<>(); 
-    private int saldo_cliente;
-    private boolean stato;
+     
+    protected float saldocliente;
+
     /* Costruttore */
     public Cliente()
     {
         super();
+        
     }
     /* Metodi */
 
     
-    public ArrayList<Oggetti> getOggettiComprati() {
-        return oggettiComprati;
-    }
+   
+    public float getSaldo(){
 
-    
-    public void setOggettiComprati(ArrayList<Oggetti> oggettiComprati) {
-        this.oggettiComprati = oggettiComprati;
-    }
-    public int getSaldo(){
-
-    return saldo_cliente;
+    return saldocliente;
 }
-public void setSaldo(int saldo){
+public void setSaldo(float saldo){
     
-    this.saldo_cliente = saldo;
+    this.saldocliente = saldo;
 }
 
 

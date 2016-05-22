@@ -12,10 +12,12 @@ public class Oggetti {
     /* Attributi */
     private int id;
     private String nome;
-    private int prezzo;
+    private float prezzo;
     private String descrizione;
     private String immagine;
     private int quantity;
+    private String categoria;
+    private int id_venditore;
     
 
     
@@ -28,6 +30,8 @@ public class Oggetti {
         descrizione = "";
         immagine = "";
         quantity =0;
+        categoria = "";
+        id_venditore= 0;
         
     }
     /**
@@ -57,11 +61,11 @@ public class Oggetti {
     public void setId(int id) {
         this.id = id;
     }
-    public int getPrezzo(){
+    public float getPrezzo(){
         return prezzo;
     }
     
-    public void setPrezzo(int prezzo){
+    public void setPrezzo(float prezzo){
         
         this.prezzo = prezzo;
     }
@@ -94,6 +98,22 @@ public class Oggetti {
     {
         return quantity;
     
+    }
+    public void setCategoria(String categoria)
+    {
+        this.categoria = categoria;
+        
+    }
+    public String getCategoria()
+    {
+        return categoria;
+    }
+    public void setIdVenditore(int id_venditore){
+        this.id_venditore = id_venditore;
+    }
+    public int getIdVenditore()
+    {
+        return id_venditore;
     }
     
     

@@ -2,14 +2,16 @@
 package Classi;
 
 import java.util.ArrayList;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class OggettiFactory {
 
     private static OggettiFactory singleton;
+    private String connectionString;
     
-    private ArrayList<Oggetti> arrayOggettiComprati_cliente = new ArrayList<>();
-    private ArrayList<Oggetti> arrayOggettiVenduti_venditore = new ArrayList<>();
     
     
     public static OggettiFactory getInstance() {
@@ -26,67 +28,305 @@ public class OggettiFactory {
 
     
     
-    
-    public ArrayList<Oggetti> getOggettiVendutiList(){
+    public ArrayList<Oggetti> getObjectListUser(int id) {
+        ArrayList<Oggetti> listaOggetti = new ArrayList<>();
         
-        return arrayOggettiVenduti_venditore;
-    
-    }
         
-    public ArrayList<Oggetti> getOggettiCompratiList(){
         
-        return arrayOggettiComprati_cliente;
+        try {
+            Connection conn = DriverManager.getConnection(connectionString, "fede", "fede");
+            Statement stmt = conn.createStatement();
+            String query = "select * from oggetti where id_venditore = "+ id +"";
+            ResultSet set = stmt.executeQuery(query);
+                // ciclo sulle righe restituite
+            while (set.next()) 
+            {
+                Oggetti current = new Oggetti();
+                current.setId(set.getInt("id"));
+                current.setNome(set.getString("nome"));
+                current.setDescrizione(set.getString("descrizione"));
+                current.setQuantita(set.getInt("quantita"));
+                current.setCategoria(set.getString("categoria"));
+                current.setImmagine(set.getString("url_immagine"));
+                current.setPrezzo(set.getFloat("prezzo"));
+                current.setIdVenditore(set.getInt("id_venditore"));
+                listaOggetti.add(current);
+            }
+           
+            stmt.close();
+            conn.close();
+            } 
+        catch (SQLException e) 
+            {
+                e.printStackTrace();
+            }
+        return listaOggetti;
+    } //passatogli l'id del venditore resistuisce la lista degli oggetti venduti SOLO da quel venditore
     
-    }
-    
-    public void addOggettoVenditore(Oggetti object)
-    {
-        arrayOggettiVenduti_venditore.add(object);
-    
-    }
     
     public ArrayList<Oggetti> getObjectList() {
         ArrayList<Oggetti> listaOggetti = new ArrayList<>();
-       
-        // Oggett1
-        Oggetti oggetto_1 = new Oggetti();
-        oggetto_1.setId(1);
-        oggetto_1.setNome("Condensatore");
-        oggetto_1.setPrezzo(15);
-        oggetto_1.setDescrizione("Condensatore 10uF - 15v");
-        oggetto_1.setImmagine("/Amministratore_di_Sistema/M3/imgs/Condensatore.jpg");
-        oggetto_1.setQuantita(3);
-        listaOggetti.add(oggetto_1);
-        // Oggett2
-        Oggetti oggetto_2 = new Oggetti();
-        oggetto_2.setId(2);
-        oggetto_2.setNome("Ventola");
-        oggetto_2.setPrezzo(15);
-        oggetto_2.setDescrizione("Ventola 10x10cm, 12V - 250mA");
-        oggetto_2.setImmagine("/Amministratore_di_Sistema/M3/imgs/Ventola.jpg");
-        oggetto_2.setQuantita(10);
-        listaOggetti.add(oggetto_2);
-        // Oggett3
-        Oggetti oggetto_3 = new Oggetti();
-        oggetto_3.setId(3);
-        oggetto_3.setNome("Mouse");
-        oggetto_3.setPrezzo(49);
-        oggetto_3.setDescrizione("Microsoft Mouse");
-        oggetto_3.setImmagine("/Amministratore_di_Sistema/M3/imgs/Mouse.jpg");
-        oggetto_3.setQuantita(23);
-        listaOggetti.add(oggetto_3);
-        
-
-       
         
         
-       
-
-      
         
-       
-        
+        try {
+            Connection conn = DriverManager.getConnection(connectionString, "fede", "fede");
+            Statement stmt = conn.createStatement();
+            String query = "select * from oggetti";
+            ResultSet set = stmt.executeQuery(query);
+                // ciclo sulle righe restituite
+            while (set.next()) 
+            {
+                Oggetti current = new Oggetti();
+                current.setId(set.getInt("id"));
+                current.setNome(set.getString("nome"));
+                current.setDescrizione(set.getString("descrizione"));
+                current.setQuantita(set.getInt("quantita"));
+                current.setCategoria(set.getString("categoria"));
+                current.setImmagine(set.getString("url_immagine"));
+                current.setPrezzo(set.getFloat("prezzo"));
+                current.setIdVenditore(set.getInt("id_venditore"));
+                listaOggetti.add(current);
+            }
+           
+            stmt.close();
+            conn.close();
+            } 
+        catch (SQLException e) 
+            {
+                e.printStackTrace();
+            }
         return listaOggetti;
+    } //restituisce la lista di tutti gli oggetti in vendita dal db
+    
+    
+    public void addOggettoInVendita(Oggetti obj) //passandogli un oggetto di classe Oggetti e l'id del venditore provvede ad aggiungerlo al DB
+    {
+        
+        try
+        {
+            Connection conn = DriverManager.getConnection(connectionString, "fede", "fede");
+            //sql query per l'inserimento
+            String query = "insert into oggetti (id, nome, descrizione, categoria, quantita, url_immagine, prezzo, id_venditore) values (default,?,?,?,?,?,?,? ) ";
+                    
+            PreparedStatement stmt = conn.prepareStatement(query);
+           
+             
+            
+            // dati
+            stmt.setString(1, obj.getNome());
+            stmt.setString(2, obj.getDescrizione());
+            stmt.setString(3, obj.getCategoria());
+            stmt.setInt(4, obj.getQuantita());
+            stmt.setString(5, obj.getImmagine());
+            stmt.setFloat(6, obj.getPrezzo());
+            stmt.setInt(7, obj.getIdVenditore());
+            int set = stmt.executeUpdate();
+            stmt.close();
+            conn.close();              
+
+        }
+        catch(SQLException e)
+        {
+           e.printStackTrace();
+        }
+       
     }
     
+    public void delOggetto(int id) //passato l'id dell'oggetto provvede a cancellarlo dal db
+    {
+        
+        try
+        {
+            Connection conn = DriverManager.getConnection(connectionString, "fede", "fede");
+            //sql query per l'inserimento
+            String query = "delete from oggetti where id = "+id+" ";
+                    
+            PreparedStatement stmt = conn.prepareStatement(query);
+            int set = stmt.executeUpdate();
+            stmt.close();
+            conn.close();              
+
+        }
+        catch(SQLException e)
+        {
+           e.printStackTrace();
+        }
+       
+    }
+    public Oggetti findObject(int id) //passato l'id del oggetto recupera tutti i dati dell'oggetto
+    { 
+        
+        
+        
+        
+        try {
+            Connection conn = DriverManager.getConnection(connectionString, "fede", "fede");
+            Statement stmt = conn.createStatement();
+            String query = "select * from oggetti where id = "+id+"";
+            ResultSet set = stmt.executeQuery(query);
+                // ciclo sulle righe restituite
+            if (set.next()) 
+            {
+                Oggetti current = new Oggetti();
+                current.setId(set.getInt("id"));
+                current.setNome(set.getString("nome"));
+                current.setDescrizione(set.getString("descrizione"));
+                current.setQuantita(set.getInt("quantita"));
+                current.setCategoria(set.getString("categoria"));
+                current.setImmagine(set.getString("url_immagine"));
+                current.setPrezzo(set.getFloat("prezzo"));
+                current.setIdVenditore(set.getInt("id_venditore"));
+                set.close();
+                stmt.close();
+                conn.close();
+                return current;
+            }
+            set.close();
+            stmt.close();
+            conn.close();
+            } 
+        catch (SQLException e) 
+            {
+                e.printStackTrace();
+            }
+        return null;
+    }
+    public boolean modObject(Oggetti o) // passato l'id di un oggetto provvede a modificare i valori, se restituisce true ok, se false qualcosa è andato male
+    { 
+        
+        try {
+            Connection conn = DriverManager
+                    .getConnection(connectionString, "fede", "fede");
+            String query = "update oggetti set nome = ?, descrizione = ?, categoria = ?, quantita = ?, url_immagine = ?, prezzo = ? where id = ? ";
+            PreparedStatement stmt = conn.prepareStatement(query);
+                
+            
+            stmt.setString(1, o.getNome());
+            stmt.setString(2, o.getDescrizione());
+            stmt.setString(3, o.getCategoria());
+            stmt.setInt(4, o.getQuantita());
+            stmt.setString(5, o.getImmagine());
+            stmt.setFloat(6, o.getPrezzo());
+            stmt.setInt(7, o.getId());
+            stmt.executeUpdate();    
+            
+            stmt.close();
+            conn.close();
+            return true;
+            
+            } 
+        catch (SQLException ex) 
+            {
+               Logger.getLogger(OggettiFactory.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        return false;
+        
+    } 
+    
+    public String makeAcquisto(Oggetti obj_to_buy, Cliente compratore)throws SQLException
+    {
+        
+        int id_obj = obj_to_buy.getId();//recupera id oggetto da comprare
+        int id_seller = obj_to_buy.getIdVenditore();//recupero id venditore dell'oggetto
+        int quantita = obj_to_buy.getQuantita();//recupera quantita oggetti disponibili
+        int new_quantita = 0;//nuova quantita
+        float prezzo = obj_to_buy.getPrezzo();//recupera prezzo oggetto
+        int id_cliente = compratore.getId();//recupera id cliente
+        float saldo = compratore.getSaldo();//recupera saldo cliente
+        Venditore v = UtentiFactory.getInstance().findSeller(id_seller);
+        Connection conn = DriverManager.getConnection(connectionString,"fede","fede");//si colega al DB dopo che ha richiesto il venditore
+        PreparedStatement aggiornaOggetto = null;
+        PreparedStatement cancellaOggetto = null;
+        PreparedStatement aggiornaSaldoCliente = null;
+        PreparedStatement aggiornaSaldoVenditore = null;
+        
+        
+
+        // Sql 
+        String updateObjQuantity = "update oggetti set quantita = ? where id = "+id_obj+" ";
+        String deleteObject = "delete from oggetti where id = ? ";
+        String updateClientBalance = "update clienti set saldo_cliente = ? where id="+id_cliente+" ";
+        String updateSellerBalance = "update venditori set saldo_venditore = ? where id="+id_seller+"";
+        int c1 = 0;
+        int c2 = 0;
+        int c3 = 0;
+        try
+        {
+           conn.setAutoCommit(false);
+           aggiornaOggetto = conn.prepareStatement(updateObjQuantity);
+           cancellaOggetto = conn.prepareStatement(deleteObject);
+           aggiornaSaldoCliente = conn.prepareStatement(updateClientBalance);
+           aggiornaSaldoVenditore = conn.prepareStatement(updateSellerBalance);
+           if(quantita > 1 && saldo > prezzo) // se il num di oggetti è maggiore di uno aggiorna il numero disponibili. 
+           {
+                new_quantita = quantita - 1;//calcola la nuova quantita
+                float newsaldocliente = saldo - prezzo;
+                float newsaldovenditore = v.getSaldo() + prezzo;
+                aggiornaOggetto.setInt(1, new_quantita);
+                aggiornaSaldoCliente.setFloat(1, newsaldocliente);//calcola saldo cliente
+                aggiornaSaldoVenditore.setFloat(1, newsaldovenditore );//calcola saldo venditore
+                c1 = aggiornaOggetto.executeUpdate();
+                c2 = aggiornaSaldoCliente.executeUpdate();
+                c3 = aggiornaSaldoVenditore.executeUpdate();
+           }
+           else if (quantita == 1 && saldo > prezzo)
+           {
+                float newsaldocliente = saldo - prezzo;
+                float newsaldovenditore = v.getSaldo() + prezzo;
+                cancellaOggetto.setInt(1, id_obj);
+                aggiornaSaldoCliente.setFloat(1, newsaldocliente);//calcola saldo cliente
+                aggiornaSaldoVenditore.setFloat(1, newsaldovenditore );//calcola saldo venditore
+                c1 = cancellaOggetto.executeUpdate();
+                c2 = aggiornaSaldoCliente.executeUpdate();
+                c3 = aggiornaSaldoVenditore.executeUpdate();
+           }
+           else 
+           {
+               conn.rollback();
+               return "saldo";
+           }
+
+           if(c1 != 1 || c2 != 1 || c3 != 1) //controlla che le 3 quey ritornino SOLO 1 come risultato
+           {
+               conn.rollback(); //se non ritornano 1 rollback
+               return "error"; 
+           }
+           
+           conn.commit(); //altrimenti commit e return ok
+           return "ok";
+        }
+        catch(SQLException e)
+        {
+            try
+            {
+                conn.rollback();
+            }
+            catch(SQLException e2)
+            {
+                
+            }
+        }
+        finally
+        {
+            if(aggiornaOggetto != null)
+                aggiornaOggetto.close();
+            if(aggiornaSaldoCliente != null)
+                aggiornaSaldoCliente.close();
+            if(aggiornaSaldoVenditore != null)
+                aggiornaSaldoVenditore.close();
+            
+            conn.setAutoCommit(true);
+            conn.close();
+        } 
+        return null;
+    }
+    
+    public void setConnectionString(String s){
+	this.connectionString = s;
+}
+    public String getConnectionString(){
+	return this.connectionString;
+} 
 }

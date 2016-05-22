@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Classi;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +18,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author bigfe
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login.html"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login.html"}, loadOnStartup = 0)
 public class LoginServlet extends HttpServlet {
+    private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String DB_CLEAN_PATH = "../../web/WEB-INF/db/ammdb";
+    private static final String DB_BUILD_PATH = "WEB-INF/db/ammdb";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,26 +32,24 @@ public class LoginServlet extends HttpServlet {
 
         if(request.getParameter("Submit") != null)
         {
-            // Preleva i dati inviati
+            // Preleva i dati inseriti dall'utente, chiama un metodo per cercare l'utente
             
             String username = request.getParameter("Username");
             String password = request.getParameter("Password");
+            Utente u = UtentiFactory.getInstance().getUtente(username, password); 
+/*            ArrayList<Utente> listaUtenti = UtentiFactory.getInstance().getUserList();
+*/  
             
-            ArrayList<Utente> listaUtenti = UtentiFactory.getInstance().getUserList();
-            for(Utente u : listaUtenti)
-            {
-                if(u.getUsername().equals(username) &&
-                   u.getPassword().equals(password))
-                {
-                    
-                
+            
+                if(u != null)
+                {            
                     
                     if (u instanceof Cliente) 
                     {
                         session.setAttribute("sessione", "cliente");
                         request.setAttribute("Appoggio", "Cliente");
                         request.setAttribute("Pagina", "Tabella");
-                        session.setAttribute("cliente",u);
+                        session.setAttribute("cliente", u);
                         session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectList());
                         request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
                         
@@ -66,7 +65,7 @@ public class LoginServlet extends HttpServlet {
                     }                    
                 }
                 else {request.setAttribute("errore", "Username o Password errati");}
-            }
+            
         }
         if(request.getParameter("Invalidate") != null)
             {
@@ -106,6 +105,17 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+        @Override 
+    public void init(){
+        String dbConnection = "jdbc:derby:" + this.getServletContext().getRealPath("/") + DB_BUILD_PATH;
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        UtentiFactory.getInstance().setConnectionString(dbConnection);
+        OggettiFactory.getInstance().setConnectionString(dbConnection);
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

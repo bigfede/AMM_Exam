@@ -1,0 +1,8 @@
+Elenco entità e relazioni:
+
+entità: Clienti, Venditori, Oggetti.
+relazioni: Venditori N - 1 Oggetti.
+
+Clienti[ID(identificativo), nome, cognome, username, password, email, indirizzo, saldo_cliente]
+Venditori[ID(identificativo), nome, cognome, username, password, email, indirizzo, saldo_venditore]
+Oggetti[ID(identificativo), nome, descrizione, categoria, quantità, foto, prezzo, ID_venditore]

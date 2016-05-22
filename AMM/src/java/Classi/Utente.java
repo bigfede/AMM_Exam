@@ -1,14 +1,15 @@
 
 package Classi;
 
-public abstract class Utente {
+public abstract class Utente { /*prima era di tipo abstract*/
     /* Attributi */
     protected int id;
     protected String nome;
     protected String cognome;
-    protected int saldo;
     protected String username;
     protected String password;
+    protected String email;
+    protected String indirizzo;
     
 
     /**
@@ -23,9 +24,10 @@ public abstract class Utente {
         id = 0;
         nome = "";
         cognome = "";
-        saldo = 0;
         username="";
         password="";
+        email="";
+        indirizzo="";
         
     }
     
@@ -98,5 +100,23 @@ public abstract class Utente {
     public void setPassword(String password) {
         this.password = password;
     }
+    public void setIndirizzo(String indirizzo)
+    {
+        this.indirizzo = indirizzo;
     
+    }
+    public void setEmail(String email)
+    {
+        this.email = email;
+    
+    }
+    public String getIndirizzo()
+    {
+      return indirizzo;  
+    }
+    
+    public String getEmail()
+    {
+      return email;  
+    }
 }
