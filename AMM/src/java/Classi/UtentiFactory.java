@@ -24,7 +24,7 @@ public class UtentiFactory {
     }
 
 
-        public Utente getUtente(String username, String password)
+        public Utente getUtente(String username, String password)//passati user e password restituisce l'utente, o cliente o venditore
     {
         try
         {

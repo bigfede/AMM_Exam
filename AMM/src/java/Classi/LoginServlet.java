@@ -37,50 +37,43 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("Username");
             String password = request.getParameter("Password");
             Utente u = UtentiFactory.getInstance().getUtente(username, password); 
-/*            ArrayList<Utente> listaUtenti = UtentiFactory.getInstance().getUserList();
-*/  
-            
-            
-                if(u != null)
-                {            
-                    
+                if(u != null)//se l'utente è presente nel db sarà diverso da null
+                {             
                     if (u instanceof Cliente) 
                     {
-                        session.setAttribute("sessione", "cliente");
-                        request.setAttribute("Appoggio", "Cliente");
-                        request.setAttribute("Pagina", "Tabella");
-                        session.setAttribute("cliente", u);
-                        session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectList());
-                        request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
-                        
-                        
+                        session.setAttribute("sessione", "cliente");//imposta la sessione di tipo cliente
+                        request.setAttribute("Appoggio", "Cliente");//imposta la home.jsp in cliente
+                        request.setAttribute("Pagina", "Tabella");//dentro form_cliente.jsp visualizza la tabella
+                        session.setAttribute("cliente", u);//imposta il cliente come oggetto di sessione
+                        session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectList());//imposta la lista oggetti come oggetto di sessione
+                        request.getRequestDispatcher("/M3/home.jsp").forward(request, response);    
                     }
                     else
-                    {
-                        session.setAttribute("sessione", "venditore");
-                        request.setAttribute("Appoggio", "Venditore");
-                        request.setAttribute("Pagina", "Form");
-                        session.setAttribute("venditore", u);
+                    {   //se non è cliente può essere solo venditore!
+                        session.setAttribute("sessione", "venditore");//imposta la sessione di tipo venditore
+                        request.setAttribute("Appoggio", "Venditore");//imposta la home.jsp in venditore
+                        request.setAttribute("Pagina", "Form");//imposta la tabella in form_venditore.jsp 
+                        session.setAttribute("venditore", u);//imposta il venditore come oggetto di sessione
                         request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
                     }                    
                 }
-                else {request.setAttribute("errore", "Username o Password errati");}
+                else {request.setAttribute("errore", "Username o Password errati");}//se non trova nessun utente fa visualizzare un errore
             
         }
-        if(request.getParameter("Invalidate") != null)
+        if(request.getParameter("Invalidate") != null)//per invalidare la sessione, ricarica il form login nella home.jsp
             {
                 session.invalidate();
                 request.setAttribute("Appoggio", "Login");
                 request.getRequestDispatcher("/M3/home.jsp").forward(request, response);     
             }
-        if(session.getAttribute("sessione") == "venditore"){
-        
+        if(session.getAttribute("sessione") == "venditore")//se è già presente una sessione attiva di tipo venditore
+        {
             request.setAttribute("Appoggio", "Venditore");
             request.setAttribute("Pagina", "Form");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
         
-        if(session.getAttribute("sessione") == "cliente")
+        if(session.getAttribute("sessione") == "cliente")//se è già presente una sessione attiva di  tipo cliente
         {
         
             request.setAttribute("Pagina", "Tabella");
@@ -88,7 +81,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
        
-       else 
+       else //se non c'è una sessione attiva visualizza il form di login attraverso la home.jsp
        {
             request.setAttribute("Appoggio", "Login");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 

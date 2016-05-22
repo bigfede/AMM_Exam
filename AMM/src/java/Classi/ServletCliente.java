@@ -37,40 +37,37 @@ public class ServletCliente extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectList());
-        if(request.getParameter("Compra") != null)
+        session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectList());//ricarica ogni volta la lista degli oggetti per la sessione
+        
+        if(request.getParameter("Compra") != null)//usato per effettuare l'acquisto vero e proprio
         {
-            
-             Cliente u = (Cliente) session.getAttribute("cliente");
-             Oggetti o = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));
-             String feedback = OggettiFactory.getInstance().makeAcquisto(o, u);
-             /*float saldo = u.getSaldo();
-             String prezzo_string = request.getParameter("prezzo");
-             Float prezzo = Float.parseFloat(prezzo_string);*/
-             if (feedback != null)
+             Cliente u = (Cliente) session.getAttribute("cliente");//recuper l'utente dalla sessione
+             Oggetti o = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));//prende l'oggetto inserito nel carrello
+             String feedback = OggettiFactory.getInstance().makeAcquisto(o, u); //metodo per effettuare l'acquisto, restituisce una stringa di controllo, premde in ingresso l'acquirente e l'oggetto da comprare
+             if (feedback != null)//se makeAcquisto restituisce qualcosa valuta cosa restituisce
              {
-                if (feedback == "ok"){
-                    Cliente c = (Cliente)UtentiFactory.getInstance().findClient(u.getId());
-                    
+                if (feedback == "ok")//acquisto avvenuto correttamente
+                {
+                    Cliente c = (Cliente)UtentiFactory.getInstance().findClient(u.getId());//rende disponibile alla sessione l'utente corrente con i dati aggiornati (saldo)
                     session.setAttribute("cliente", c);
                     request.setAttribute("Pagina", "Acquisto");
                     request.setAttribute("Appoggio", "Cliente");
                     request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
                 }
-                else if (feedback == "errore")
+                else if (feedback == "errore")//errore nelle query, le 3 query hanno restituo più di una riga
                 {
                     request.setAttribute("Pagina", "Errore");
                     request.setAttribute("Appoggio", "Cliente");
                     request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
                 }
-                else if (feedback == "saldo")
+                else if (feedback == "saldo")//errore saldo insufficiente
                 {
                     request.setAttribute("Pagina", "Saldo");
                     request.setAttribute("Appoggio", "Cliente");
                     request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
                 }
              }
-             else 
+             else //la stringa è di tipo null, errore nella transazione
              {
                 request.setAttribute("Pagina", "Errore");
                 request.setAttribute("Appoggio", "Cliente");
@@ -79,27 +76,26 @@ public class ServletCliente extends HttpServlet {
         }
         
         
-        if(request.getParameter("Carrello") != null){
-        
-            //recupera l'oggetto tramite l'id
-            Oggetti obj = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id"))); //modificare con medoto ricerca db
-            //modo visualizzazione pagina, rende disponibile l'oggetto come attributo
-            request.setAttribute("oggetto_comprato", obj);
+        if(request.getParameter("Carrello") != null)//aggiungi l'oggetto desiderato al carrello per confermare l'acquisto
+        {
+            
+            Oggetti obj = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));//recupera l'oggetto tramite l'id
+            request.setAttribute("oggetto_comprato", obj);//modo visualizzazione pagina, rende disponibile l'oggetto come attributo
             request.setAttribute("Pagina", "Riepilogo");
             request.setAttribute("Appoggio", "Cliente");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
                 
             
         }
-        // controllo sessione: se agià attiva visualizza la pagina cliente
-        if(session.getAttribute("sessione").equals("cliente"))
+        
+        if(session.getAttribute("sessione").equals("cliente"))// controllo sessione: se agià attiva visualizza la pagina cliente
         {       
             request.setAttribute("Appoggio", "Cliente");
             request.setAttribute("Pagina", "Tabella");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);     
         }
-        else 
-        //altrimenti accesso negato
+        else //altrimenti accesso negato
+        
         {
             request.setAttribute("Appoggio", "Negato");
             request.setAttribute("Tipo", "cliente");

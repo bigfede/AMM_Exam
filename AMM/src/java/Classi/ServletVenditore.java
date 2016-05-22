@@ -38,7 +38,7 @@ public class ServletVenditore extends HttpServlet {
         HttpSession session = request.getSession(true);
         
         
-        if(request.getParameter("Submit") != null)
+        if(request.getParameter("Submit") != null)//inizio aggiunta oggetto in vendita al db
         {
             Oggetti obj = new Oggetti();
             Venditore u = (Venditore) session.getAttribute("venditore"); //recupero l'utente per poter impostare id_venditore all'oggetto
@@ -50,39 +50,39 @@ public class ServletVenditore extends HttpServlet {
             obj.setCategoria(request.getParameter("categoria"));
             obj.setIdVenditore(u.getId());
             OggettiFactory.getInstance().addOggettoInVendita(obj); //metodo per aggiungere l'oggetto al db.  
-            request.setAttribute("oggetto", obj);
+            request.setAttribute("oggetto", obj);//oggetto come attributo
             request.setAttribute("Appoggio", "Venditore");
             request.setAttribute("Pagina", "Display"); 
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
         
-        else if(request.getParameter("Lista") != null)
+        else if(request.getParameter("Lista") != null)//visualizza lista oggetti in vendita dal venditore corrente
         {
-            Venditore u = (Venditore) session.getAttribute("venditore");
-            session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectListUser(u.getId())); //passato l'id dell'oggetto imposta attributo di sessione l'oggetto in questione
+            Venditore u = (Venditore) session.getAttribute("venditore");//recupera il venditore dalla sessione
+            session.setAttribute("oggetti", OggettiFactory.getInstance().getObjectListUser(u.getId())); //passato l'id del venditore restituisce la lista degli oggetti in vendita da lui
             request.setAttribute("Appoggio", "Venditore");
             request.setAttribute("Pagina", "Tabella");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
         
-        else if(request.getParameter("Elimina") != null)
+        else if(request.getParameter("Elimina") != null)//per eliminare un oggetto in vendita
         {
-            OggettiFactory.getInstance().delOggetto(Integer.parseInt(request.getParameter("id")));
+            OggettiFactory.getInstance().delOggetto(Integer.parseInt(request.getParameter("id")));//passato l'id dell'oggetto tramite hidden field, cancella l'oggetto
             request.setAttribute("Appoggio", "Venditore");
             request.setAttribute("Pagina", "Rimosso");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
         
-        else if(request.getParameter("Modifica") != null)
+        else if(request.getParameter("Modifica") != null)//per modificare l'oggetto in vendita
         {
-            Oggetti o = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));
+            Oggetti o = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));//dato l'id dell'oggetto tramite hidden field recupera tutti gli attributi
             request.setAttribute("oggetto", o);
             request.setAttribute("Appoggio", "Venditore");
             request.setAttribute("Pagina", "Form_modifica");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
         
-        else if(request.getParameter("ConfermaModifica")!= null)
+        else if(request.getParameter("ConfermaModifica")!= null)//per inviare al db le modifiche sul oggetto
         {
             Oggetti oggetto_nuovo = new Oggetti();
             oggetto_nuovo.setId(Integer.parseInt(request.getParameter("id")));
@@ -92,7 +92,7 @@ public class ServletVenditore extends HttpServlet {
             oggetto_nuovo.setQuantita(Integer.parseInt(request.getParameter("quantita")));
             oggetto_nuovo.setImmagine(request.getParameter("immagine"));
             oggetto_nuovo.setPrezzo(Float.parseFloat(request.getParameter("prezzo")));
-            boolean controllo = OggettiFactory.getInstance().modObject(oggetto_nuovo);
+            boolean controllo = OggettiFactory.getInstance().modObject(oggetto_nuovo);//metodo per modificare l'oggetto, se è true tutto ok
             if (controllo == true)
             {
             Venditore u = (Venditore) session.getAttribute("venditore");
@@ -102,15 +102,15 @@ public class ServletVenditore extends HttpServlet {
             request.setAttribute("Pagina", "Tabella");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
             }   
-            else
-                {
-                Oggetti o = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));
-                request.setAttribute("oggetto", oggetto_nuovo);
-                request.setAttribute("Appoggio", "Venditore");
-                request.setAttribute("Errore", "Modifica");
-                request.setAttribute("Pagina", "Form_modifica");
-                request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
-                }
+            else//se errore fa visualizzare nuovamente l'oggetto da modificare senza effettuare cambiamenti
+            {
+            Oggetti o = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("oggetto", o);
+            request.setAttribute("Appoggio", "Venditore");
+            request.setAttribute("Errore", "Modifica");
+            request.setAttribute("Pagina", "Form_modifica");
+            request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
+            }
         }//richiama il metodo modObject della classe factory passandogli l'oggetto da modificare, se il risultato è true fa vedere la tabella aggionata altrimenti, errore.
         
         else if(session.getAttribute("sessione").equals("venditore")) //controlla che la sessione attiva sia di tipo venditore
@@ -120,7 +120,7 @@ public class ServletVenditore extends HttpServlet {
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
    
         }
-        else 
+        else //se non c'è sessione attiva mostra un messaggio di accesso negato
         {
         
             request.setAttribute("Appoggio", "Negato");

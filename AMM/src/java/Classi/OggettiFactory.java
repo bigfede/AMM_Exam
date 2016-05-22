@@ -225,8 +225,8 @@ public class OggettiFactory {
         
     } 
     
-    public String makeAcquisto(Oggetti obj_to_buy, Cliente compratore)throws SQLException
-    {
+    public String makeAcquisto(Oggetti obj_to_buy, Cliente compratore)throws SQLException //metodo per effettuare un acquisto, passato l'oggetto da comprare e l'utente che lo compra
+    {//restituisce tre stringhe possibili, null, ok, saldo
         
         int id_obj = obj_to_buy.getId();//recupera id oggetto da comprare
         int id_seller = obj_to_buy.getIdVenditore();//recupero id venditore dell'oggetto
@@ -235,7 +235,7 @@ public class OggettiFactory {
         float prezzo = obj_to_buy.getPrezzo();//recupera prezzo oggetto
         int id_cliente = compratore.getId();//recupera id cliente
         float saldo = compratore.getSaldo();//recupera saldo cliente
-        Venditore v = UtentiFactory.getInstance().findSeller(id_seller);
+        Venditore v = UtentiFactory.getInstance().findSeller(id_seller);//questo metodo effettua una connessione al db, va eseguito prima della Connection
         Connection conn = DriverManager.getConnection(connectionString,"fede","fede");//si colega al DB dopo che ha richiesto il venditore
         PreparedStatement aggiornaOggetto = null;
         PreparedStatement cancellaOggetto = null;
@@ -245,10 +245,10 @@ public class OggettiFactory {
         
 
         // Sql 
-        String updateObjQuantity = "update oggetti set quantita = ? where id = "+id_obj+" ";
-        String deleteObject = "delete from oggetti where id = ? ";
-        String updateClientBalance = "update clienti set saldo_cliente = ? where id="+id_cliente+" ";
-        String updateSellerBalance = "update venditori set saldo_venditore = ? where id="+id_seller+"";
+        String updateObjQuantity = "update oggetti set quantita = ? where id = "+id_obj+" ";//per aggiornare la quantita di oggetti disponibili
+        String deleteObject = "delete from oggetti where id = ? ";//cancellare l'oggetto se disponibili = 1
+        String updateClientBalance = "update clienti set saldo_cliente = ? where id="+id_cliente+" "; // aggiorna il saldo del cliente
+        String updateSellerBalance = "update venditori set saldo_venditore = ? where id="+id_seller+""; //aggiorna il saldo del venditore
         int c1 = 0;
         int c2 = 0;
         int c3 = 0;
@@ -259,6 +259,7 @@ public class OggettiFactory {
            cancellaOggetto = conn.prepareStatement(deleteObject);
            aggiornaSaldoCliente = conn.prepareStatement(updateClientBalance);
            aggiornaSaldoVenditore = conn.prepareStatement(updateSellerBalance);
+           // in questo caso non viene gestita l'occasione di oggetti con quantita = 0, si presuppone che un oggetto con tale disponibilità non sia messo in vendita
            if(quantita > 1 && saldo > prezzo) // se il num di oggetti è maggiore di uno aggiorna il numero disponibili. 
            {
                 new_quantita = quantita - 1;//calcola la nuova quantita
@@ -285,7 +286,7 @@ public class OggettiFactory {
            else 
            {
                conn.rollback();
-               return "saldo";
+               return "saldo";//se è arrivato in questa else è perchè il saldo disponibile non è sufficiente
            }
 
            if(c1 != 1 || c2 != 1 || c3 != 1) //controlla che le 3 quey ritornino SOLO 1 come risultato
@@ -294,7 +295,7 @@ public class OggettiFactory {
                return "error"; 
            }
            
-           conn.commit(); //altrimenti commit e return ok
+           conn.commit(); //altrimenti commit e return ok, acquisto avvenuto correttamente
            return "ok";
         }
         catch(SQLException e)
