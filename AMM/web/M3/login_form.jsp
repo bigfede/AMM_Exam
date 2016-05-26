@@ -5,7 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+
 <div class="contenuto">
             
         <h2>Login</h2>
@@ -24,7 +24,7 @@
             <label for="pss">Password:</label>
             <input type="password" name="Password" id="pss" >
             <label></label>
-            <button id="login" type="submit" name="Submit">Login</button>
+            <button type="submit" name="Submit">Login</button>
         </form> 
         
         </div>

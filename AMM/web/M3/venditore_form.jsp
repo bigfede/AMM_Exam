@@ -5,11 +5,11 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+
 
 <div class="contenuto">
-    <h2>Home Page</h3>        
-    <h3> ${venditore.nome} ${venditore.cognome} - ID Venditore: ${venditore.id} - Saldo: € ${venditore.saldo}</h2>
+    <h2>Home Page</h2>        
+    <h3> ${venditore.nome} ${venditore.cognome} - ID Venditore: ${venditore.id} - Saldo: € ${venditore.saldo}</h3>
     
     <c:choose>
         <c:when test="${Pagina == 'Form'}" >
@@ -19,7 +19,7 @@
             <label for="url">Url immagine</label>
             <input type="text" id="url" name="url_immagine">
             <label for="lista">Categoria</label>
-            <select name="categoria" >
+            <select name="categoria" id="lista" >
                 <option value="PC">PC</option>
                 <option value="elettronica">Elettronica</option>
                 <option value="consumabili">Consumabili</option>
@@ -28,9 +28,9 @@
             <label for="desc">Descrizione</label>
             <textarea rows="4" cols="20" name="descrizione" id="desc">Inserisci una descrizione del prodotto</textarea>
             <label for="qunty">Quantit&agrave;</label>
-            <input type="number" id="qunty" name="quantity" value="Inserisci il numero di prodotti" type="number">
+            <input type="number" id="qunty" name="quantity" value="0">
             <label for="prezzo">Prezzo unitario</label>
-            <input type="number" id="prezzo" name="price" value="Inserisci il prezzo del prodotto" type="number">
+            <input type="number" id="prezzo" name="price" value="0">
             <label></label>
             <button id="login" type="submit" name="Submit">Inserisci Oggetto</button>
             <button type="submit" name="Lista">Lista Oggetti</button>
@@ -46,12 +46,12 @@
             <th>Descrizione</th>
             <th>Quantit&agrave;</th>
             <th>Prezzo</th>
-            
+            <th></th>
             </tr>
              
             <c:forEach items="${oggetti}" var="oggetto">
                 <tr>
-                <td><img src="${oggetto.immagine}"  width="128" height="128"></td>
+                <td><img src="${oggetto.immagine}" alt="${oggetto.nome}" width="60" height="60"></td>
                 <td> ${oggetto.nome} </td>
                 <td> ${oggetto.categoria}</td>
                 <td> ${oggetto.descrizione}</td>
@@ -65,7 +65,9 @@
                     </form>
                 </td>
                 </tr>
+            
             </c:forEach> 
+            </table>
         </c:when> 
                 
          <c:when test="${Pagina == 'Display'}" >
@@ -80,11 +82,17 @@
             
          <c:when test="${Pagina == 'Rimosso'}" >
             <h3 class="rosso">Oggetto rimosso correttamente</h3>
+            <form action="venditore.html" method="post">
+                <button type="submit" >Indietro</button>    
+            </form>
          </c:when>
             
         
         <c:when test="${Errore == 'Modifica'}" >
             <h3 class="rosso">Errore nei dati modificati, ritenta
+            <form action="venditore.html" method="post">
+                <button type="submit" >Indietro</button>    
+            </form>
         </h3></c:when>
             
         <c:when test="${Pagina == 'Form_modifica'}" >    
@@ -94,7 +102,7 @@
             <label for="url">Url immagine</label>
             <input type="text" id="url" name="immagine" value="${oggetto.immagine}">
             <label for="lista">Categoria</label>
-            <select name="categoria" class="dropdown" >
+            <select name="categoria" id="lista" >
                 <option value="PC">PC</option>
                 <option value="elettronica">Elettronica</option>
                 <option value="consumabili">Consumabili</option>
@@ -105,7 +113,7 @@
             <label for="qunty">Quantit&agrave;</label>
             <input type="number" id="qunty" name="quantita" value="${oggetto.quantita}" >
             <label for="prezzo">Prezzo unitario</label>
-            <input type="number" id="prezzo" name="prezzo" value="${oggetto.prezzo}" type="number">
+            <input type="number" id="prezzo" name="prezzo" value="${oggetto.prezzo}">
             <label></label>
             <button id="login" type="submit" name="ConfermaModifica">Conferma Modifica</button>
             <button id="login" type="submit" name="Lista">Lista Oggetti</button>

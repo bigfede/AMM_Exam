@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+
 <header>
             <h1>
                 P.Store
@@ -15,5 +15,4 @@
                 Sono ammessi alla vendita anche componenti elettronici, quali resistori, condensatori
                 e integrati.
             </p> 
-            
 </header>

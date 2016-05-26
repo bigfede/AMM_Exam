@@ -18,7 +18,10 @@ h1{
 
 .rosso{
     color: red;        
-}      
+}  
+.verde{
+    color:green;
+}
 h2{
     font-size: 20px;
 }
@@ -140,6 +143,12 @@ button.arancio{
     border: 2px solid orange;
     
 }
+button.logout{
+    width: 100px;
+    margin-left:50px;
+    margin-top:20px;
+    margin-bottom: 50px;
+}
 
 label::before {
     content: '\A\A';
@@ -183,13 +192,15 @@ input#nome, input#url, input#qunty, input#prezzo{
     height: 100%;
     
 }
+
 .contenuto {
     margin-left: 300px;
     margin-top: 20px;
     padding-left:20px;
+    padding-right: 20px;
    /* border: 4px solid black;*/
     padding-bottom: 30px;
-    width: 600px;
+    width: 680px;
     text-align: center;
     border-left: 1px solid #46A3AF;
     
@@ -200,7 +211,8 @@ input#nome, input#url, input#qunty, input#prezzo{
     /*border: 4px solid black;*/
     padding-bottom: 30px;
     padding-left: 20px;
-    width: 580px;
+    padding-right: 20px;
+    width: 680px;
     text-align: justify;
     border-left: 1px solid #46A3AF
 }
@@ -208,11 +220,13 @@ input#nome, input#url, input#qunty, input#prezzo{
     float: left;
    /* border: 2px solid red;*/
     text-align: left;
-    padding-left: 15px;
+    padding-top: 30px;
+    padding-left: 50px;
     padding-right: 10px;
     position: static;
     width: 200px;
 }
+
 
 .pulsanti 
 {
@@ -274,7 +288,13 @@ input#nome, input#url, input#qunty, input#prezzo{
     padding: 0px;
     border-left: none;
    }
-
+   button.logout{
+    width: 100px;
+    margin-top:20px;
+    margin-left:0px;
+    margin-top:0px;
+    margin-bottom: 50px;
+    }
 }
 @media only screen and (max-width: 480px)
 {   body{
@@ -323,5 +343,12 @@ input#nome, input#url, input#qunty, input#prezzo{
     padding: 0px;
     border-left: none;
    }
+    button.logout{
+    width: 100px;
+    margin-top:20px;
+    margin-left:0px;
+    margin-top:0px;
+    margin-bottom: 50px;
+    }
 
 }
