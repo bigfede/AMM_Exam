@@ -23,6 +23,8 @@
         <meta name="keywords" content="e-commerce, elettronica, comprare">
         <meta name="description" content="Login sito eCommerce">
         <link href="/Amministratore_di_Sistema/M3/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+        <script type="text/javascript" src="/Amministratore_di_Sistema/M3/js/jquery-3.0.0.min.js"></script>
+        <script type="text/javascript" src="/Amministratore_di_Sistema/M3/js/javascript.js"></script>
     </head>
     <body>
         <div class="pagina">

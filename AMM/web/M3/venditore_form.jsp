@@ -15,9 +15,9 @@
         <c:when test="${Pagina == 'Form'}" >
             <form action="venditore.html" method="post">
             <label for="nome">Nome prodotto</label>
-            <input type="text" id="nome" name="nome_prodotto" value="Inserisci il nome del prodotto">
+            <input type="text" id="nome" name="nome_prodotto" placeholder="Inserisci il nome del prodotto...">
             <label for="url">Url immagine</label>
-            <input type="text" id="url" name="url_immagine">
+            <input type="text" id="url" name="url_immagine" placeholder="Inserisci un link all'immagine del prodotto...">
             <label for="lista">Categoria</label>
             <select name="categoria" id="lista" >
                 <option value="PC">PC</option>
@@ -26,7 +26,7 @@
                 <option value="altro">Altro</option>
             </select>
             <label for="desc">Descrizione</label>
-            <textarea rows="4" cols="20" name="descrizione" id="desc">Inserisci una descrizione del prodotto</textarea>
+            <textarea rows="4" cols="20" name="descrizione" id="desc" placeholder="Inserisci una desccrizione del prodotto..."></textarea>
             <label for="qunty">Quantit&agrave;</label>
             <input type="number" id="qunty" name="quantity" value="0">
             <label for="prezzo">Prezzo unitario</label>
@@ -50,7 +50,7 @@
             </tr>
              
             <c:forEach items="${oggetti}" var="oggetto">
-                <tr>
+                <tr class="${oggetto.id}">
                 <td><img src="${oggetto.immagine}" alt="${oggetto.nome}" width="60" height="60"></td>
                 <td> ${oggetto.nome} </td>
                 <td> ${oggetto.categoria}</td>
@@ -58,7 +58,8 @@
                 <td> ${oggetto.quantita}</td>
                 <td> ${oggetto.prezzo}</td>
                     
-                <td><form action="venditore.html" method="post">
+                <td>
+                    <form action="venditore.html" method="post">
                     <button class="verde" type="submit" name="Modifica">Modifica</button>
                     <input type="hidden" name="id" value="${oggetto.id}">
                     <button class="arancio" type="submit" name="Elimina">Elimina</button>
@@ -89,11 +90,11 @@
             
         
         <c:when test="${Errore == 'Modifica'}" >
-            <h3 class="rosso">Errore nei dati modificati, ritenta
+            <h3 class="rosso">Errore nei dati modificati, ritenta</h3>
             <form action="venditore.html" method="post">
                 <button type="submit" >Indietro</button>    
             </form>
-        </h3></c:when>
+        </c:when>
             
         <c:when test="${Pagina == 'Form_modifica'}" >    
             <form action="venditore.html" method="post">
@@ -103,6 +104,7 @@
             <input type="text" id="url" name="immagine" value="${oggetto.immagine}">
             <label for="lista">Categoria</label>
             <select name="categoria" id="lista" >
+                <option value="${oggetto.categoria}">${oggetto.categoria}</option>
                 <option value="PC">PC</option>
                 <option value="elettronica">Elettronica</option>
                 <option value="consumabili">Consumabili</option>

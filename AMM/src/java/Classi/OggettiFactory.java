@@ -99,7 +99,54 @@ public class OggettiFactory {
         return listaOggetti;
     } //restituisce la lista di tutti gli oggetti in vendita dal db
     
+    public ArrayList<Integer> getObjectListFilter(String q) {
     
+        ArrayList<Integer> arrayIDtrovati = new ArrayList<>();
+        ArrayList<Integer> arrayID = new ArrayList<>();
+        
+        
+        try {
+            Connection conn = DriverManager.getConnection(connectionString, "fede", "fede");
+            
+            String query1 = "select * from oggetti where nome like ? or descrizione like ?";
+            String query2 = "select * from oggetti";
+            PreparedStatement stmt1 = conn.prepareStatement(query1);   
+            String filter = "%"+q+"%"; 
+  
+            // dati
+            stmt1.setString(1, filter);
+            stmt1.setString(2, filter);
+
+            ResultSet set1 = stmt1.executeQuery();
+           
+            while (set1.next()) 
+            {
+ 
+                int current = set1.getInt("id");
+                arrayIDtrovati.add(current);
+            }
+           
+            stmt1.close();
+            PreparedStatement stmt2 = conn.prepareStatement(query2);
+            ResultSet set2 = stmt2.executeQuery();
+            while (set2.next()) 
+            {
+ 
+                int current = set2.getInt("id");
+                arrayID.add(current);
+            }
+            
+            stmt2.close();
+            conn.close();
+            } 
+        catch (SQLException e) 
+            {
+                e.printStackTrace();
+            }
+        arrayID.removeAll(arrayIDtrovati);
+        return arrayID;
+    } //restituisce un array contentente l'id degli oggetti cercati negato, quindi il complementare
+    //dunque data una stringa restituisce l'id degli oggetti da nascondere nella tabella "Cliente"
     public void addOggettoInVendita(Oggetti obj) //passandogli un oggetto di classe Oggetti e l'id del venditore provvede ad aggiungerlo al DB
     {
         

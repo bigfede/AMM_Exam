@@ -81,11 +81,11 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);
         }
        
-       else //se non c'è una sessione attiva visualizza il form di login attraverso la home.jsp
-       {
+        else //se non c'è una sessione attiva visualizza il form di login attraverso la home.jsp
+        {
             request.setAttribute("Appoggio", "Login");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
-       }                        
+        }                        
         
     }
            

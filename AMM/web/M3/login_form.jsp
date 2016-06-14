@@ -20,9 +20,9 @@
             <!-- metodo post usato per le password -->
             <label for="usr">Nome Utente:</label>
             <!--<input type="text" onfocus="if(this.value == 'Username') { this.value = ''; }" value="Username" id="usr" />-->
-            <input type="text" name="Username" id="usr" > <!-- "id" usato per  "label for", "name" ciò da mandare al server -->
+            <input type="text" name="Username" id="usr" placeholder="Username.." > <!-- "id" usato per  "label for", "name" ciò da mandare al server -->
             <label for="pss">Password:</label>
-            <input type="password" name="Password" id="pss" >
+            <input type="password" name="Password" id="pss" placeholder="Password.." >
             <label></label>
             <button type="submit" name="Submit">Login</button>
         </form> 

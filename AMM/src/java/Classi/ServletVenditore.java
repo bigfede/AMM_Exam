@@ -113,7 +113,7 @@ public class ServletVenditore extends HttpServlet {
             }
         }//richiama il metodo modObject della classe factory passandogli l'oggetto da modificare, se il risultato è true fa vedere la tabella aggionata altrimenti, errore.
         
-        else if(session.getAttribute("sessione").equals("venditore")) //controlla che la sessione attiva sia di tipo venditore
+        else if(session.getAttribute("sessione")=="venditore") //controlla che la sessione attiva sia di tipo venditore
         { 
             request.setAttribute("Appoggio", "Venditore"); // imposta alla chiave Appoggio il valore Venditore, così da visualizzare correttamente la home
             request.setAttribute("Pagina", "Form");         // imposta alla chiave Pagina il valore Form per visualizzare il form inserimento dati

@@ -24,7 +24,7 @@
         </c:when>
             
         <c:when test="${Pagina== 'Tabella'}">
-            <table>       
+            <table id="tabella">       
             <tr>
             <th></th>
             <th>Nome</th>
@@ -33,18 +33,16 @@
             <th>Categoria</th>
             <th>Costo</th>
             <th></th>
-            
             </tr>
-             
+            
             <c:forEach items="${oggetti}" var="oggetto">
-            <tr>
+            <tr class="${oggetto.id}">
             <td><img src="${oggetto.immagine}" alt="${oggetto.nome}" width="60" height="60"></td>
             <td> ${oggetto.nome} </td>
             <td> ${oggetto.quantita}</td>
             <td> ${oggetto.descrizione}</td>
             <td> ${oggetto.categoria}</td>
-            <td> ${oggetto.prezzo}</td>
-                
+            <td> ${oggetto.prezzo}</td>    
             <td><form action="cliente.html" method="post"><button class="compra" type="submit" name="Carrello">Compra</button>
             <input type="hidden" name="id" value="${oggetto.id}"></form></td>
             </tr>

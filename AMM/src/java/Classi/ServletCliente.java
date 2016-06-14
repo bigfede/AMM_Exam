@@ -67,6 +67,7 @@ public class ServletCliente extends HttpServlet {
                     request.getRequestDispatcher("/M3/home.jsp").forward(request, response); 
                 }
              }
+        
              else //la stringa è di tipo null, errore nella transazione
              {
                 request.setAttribute("Pagina", "Errore");
@@ -76,7 +77,7 @@ public class ServletCliente extends HttpServlet {
         }
         
         
-        if(request.getParameter("Carrello") != null)//aggiungi l'oggetto desiderato al carrello per confermare l'acquisto
+        else if(request.getParameter("Carrello") != null)//aggiungi l'oggetto desiderato al carrello per confermare l'acquisto
         {
             
             Oggetti obj = OggettiFactory.getInstance().findObject(Integer.parseInt(request.getParameter("id")));//recupera l'oggetto tramite l'id
@@ -88,13 +89,14 @@ public class ServletCliente extends HttpServlet {
             
         }
         
-        if(session.getAttribute("sessione").equals("cliente"))// controllo sessione: se agià attiva visualizza la pagina cliente
+        else if(session.getAttribute("sessione")=="cliente")// controllo sessione: se agià attiva visualizza la pagina cliente
         {       
             request.setAttribute("Appoggio", "Cliente");
             request.setAttribute("Pagina", "Tabella");
             request.getRequestDispatcher("/M3/home.jsp").forward(request, response);     
         }
-        else //altrimenti accesso negato
+    
+    else //altrimenti accesso negato
         
         {
             request.setAttribute("Appoggio", "Negato");
